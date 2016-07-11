@@ -1,6 +1,10 @@
 ## Padaroms Update Server
 This is a simple package update server for WoltLab Community Framework packages written in PHP 
 
+### Server requirements
+- PHP 5.6
+- PHAR and SQLite extensions (enabled by default)
+
 ## Installation
 You can manually install this server by downloading the source code and running `composer install` to install all dependencies.
 

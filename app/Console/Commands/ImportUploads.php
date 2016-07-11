@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Exception;
+use DOMDocument;
 use Illuminate\Console\Command;
 use Symfony\Component\Process\ProcessUtils;
 use Symfony\Component\Console\Input\InputOption;
@@ -42,7 +43,7 @@ class ImportUploads extends Command
 
         $files = [];
         foreach (scandir($path) as $file) {
-            if ($file == '.' || $file == '..') continue;
+            if (in_array($file, ['.', '..', '.gitignore', '.gitkeep'])) continue;
 
             $files[] = $this->import($file, $path);
         }
@@ -60,6 +61,17 @@ class ImportUploads extends Command
 
     protected function import($file, $path)
     {
+        // Read the package.xml without unzipping the archive
+        $fullpath = $path . '/' . $file . '/package.xml';
+        $package = file_get_contents('phar://' . $fullpath);
+
+        $data = [];
+        $dom = new DOMDocument();
+        $dom->loadXML($package);
+
+        dd($dom);
+
+        //file_get_contents($path . '/' . $file);
         return $file;
     }
 }
