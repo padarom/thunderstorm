@@ -33,7 +33,7 @@ class ServeCommand extends Command
      */
     public function fire()
     {
-        chdir(base_path() . '/public');
+        chdir(base_path());
 
         $host = $this->input->getOption('host');
 
