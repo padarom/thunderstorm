@@ -102,18 +102,22 @@ class ImportUploads extends Command
 
         // Set the package's author and the author's URL
         $package = $this->getPackage($identifier);
-        $package->author = $dom->getElementValue('author');
+        $package->author    = $dom->getElementValue('author');
         $package->authorurl = $dom->getElementValue('authorurl');
-
         $package->save();
     }
 
+    /**
+     * Retrieves the stored package with the given identifier or creates a new one.
+     * 
+     * @param string $identifier The identifier for the package to be retrieved
+     * @return Package
+     */
     protected function getPackage($identifier)
     {
         $package = Package::withIdentifier($identifier);
         if (!$package) {
             $package = new Package(['identifier' => $identifier]);
-            $package->save();
         }
 
         return $package;
