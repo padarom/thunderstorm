@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/', ['middleware' => 'package', function () use ($app) {
+$app->get('/', ['middleware' => ['package', 'wcf'], function () use ($app) {
     return $app->version();
 }]);
 
