@@ -11,18 +11,7 @@ class ListController extends Controller
     {
         $context = $this->isWCF($request) ? 'xml' : 'html';
 
-        $packages = [
-            new Package([
-                'identifier' => 'io.padarom.server', 
-                'author' => 'Christopher Mühl',
-                'authorurl' => 'https://padarom.io',
-            ]),
-            new Package([
-                'identifier' => 'io.padarom.server2', 
-                'author' => 'Christopher Mühl',
-                'authorurl' => 'https://padarom.io',
-            ]),
-        ];
+        $packages = Package::all();
 
         $content = view($context . '.list')->with(compact('packages'));
         return $this->response($context, $content);
