@@ -10,11 +10,11 @@ class Package extends Model
         'identifier', 'author', 'authorurl',
     ];
 
-    public $disableTimestamps = true;
+    public $timestamps = false;
     
     public static function withIdentifier($identifier)
     {
-        return self::where('identifier', $identifier);
+        return self::where('identifier', $identifier)->first();
     }
 
     public function versions()

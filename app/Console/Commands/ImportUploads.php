@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use Exception;
 use DOMDocument;
+use App\Package;
+use App\DOMWrapper;
 use Illuminate\Console\Command;
 use Symfony\Component\Process\ProcessUtils;
 use Symfony\Component\Console\Input\InputOption;
@@ -50,7 +52,11 @@ class ImportUploads extends Command
 
         if (count($files)) {
             foreach ($files as $file) {
-                $this->info("Imported <comment>$file</comment> (@ 1.0.0)");
+                if ($file) {
+                    $name = $file['identifier'];
+                    $version = $file['version'];
+                    $this->info("Imported \"<comment>$name</comment>\" (@ $version)");
+                }
             }
 
             return;
@@ -61,17 +67,55 @@ class ImportUploads extends Command
 
     protected function import($file, $path)
     {
-        // Read the package.xml without unzipping the archive
-        $fullpath = $path . '/' . $file . '/package.xml';
-        $package = file_get_contents('phar://' . $fullpath);
+        try {
+            // Read the package.xml without unzipping the archive
+            $fullpath = $path . '/' . $file . '/package.xml';
+            $package = file_get_contents('phar://' . $fullpath);
 
-        $data = [];
-        $dom = new DOMDocument();
-        $dom->loadXML($package);
+            $data = [];
+            $dom = new DOMDocument();
+            $dom->loadXML($package);
 
-        dd($dom);
+            $dom = new DOMWrapper($dom);
 
-        //file_get_contents($path . '/' . $file);
-        return $file;
+            $identifier = $dom->getElementAttribute('package', 'name');
+            $version = $dom->getElementValue('version');
+
+            $this->savePackageVersion($path . '/' . $file, $identifier, $version, $dom);
+
+            return compact('identifier', 'version');
+        } catch (\Exception $e) {
+            $this->error("The file \"$file\" is not a valid WCF package archive.");
+        }
+
+        return false;
+    }
+
+    protected function savePackageVersion($path, $identifier, $version, DOMWrapper $dom)
+    {
+        // Move the file into the storage/packages directory
+        $storagePath = storage_path('packages/' . $identifier);
+        if (!file_exists($storagePath)) {
+            mkdir($storagePath);
+        }
+        //rename($path, $storagePath . '/' . $version . '.tar');
+
+        // Set the package's author and the author's URL
+        $package = $this->getPackage($identifier);
+        $package->author = $dom->getElementValue('author');
+        $package->authorurl = $dom->getElementValue('authorurl');
+
+        $package->save();
+    }
+
+    protected function getPackage($identifier)
+    {
+        $package = Package::withIdentifier($identifier);
+        if (!$package) {
+            $package = new Package(['identifier' => $identifier]);
+            $package->save();
+        }
+
+        return $package;
     }
 }
