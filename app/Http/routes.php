@@ -1,8 +1,6 @@
 <?php
 
-$app->get('/', ['middleware' => ['package', 'wcf'], function () use ($app) {
-    return $app->version();
-}]);
+$app->get('/', ['middleware' => 'package', 'uses' => 'ListController@getFullList']);
 
 // Download a single package
 $app->get('package/{identifier}', ['as' => 'get-package', 'uses' => 'PackageController@getPackage']);

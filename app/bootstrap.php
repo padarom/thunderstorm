@@ -65,7 +65,6 @@ $app->singleton(
 
 $app->routeMiddleware([
     'package' => App\Http\Middleware\RedirectIfPackageIsRequested::class,
-    'wcf' => App\Http\Middleware\RedirectIfRequestedByWCF::class,
 ]);
 
 /*
