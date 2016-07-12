@@ -1,9 +1,12 @@
 ## Padaroms Update Server
-This is a simple package update server for WoltLab Community Framework packages written in PHP 
+This is a simple package update server for WoltLab Community Framework packages written in PHP.
 
-### Server requirements
-- PHP 5.6
-- PHAR and SQLite extensions (enabled by default)
+### Server Requirements
+This server is based on [Laravel Lumen](https://lumen.laravel.com/), and as such shares the same requirements.
+- PHP >= 5.5.9
+- OpenSSL PHP Extension
+- PDO PHP Extension
+- Mbstring PHP Extension
 
 ## Installation
 You can manually install this server by downloading the source code and running `composer install` to install all dependencies.
