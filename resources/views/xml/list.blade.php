@@ -13,34 +13,34 @@
             <author><![CDATA[{!! $package->author !!}]]></author>
             <authorurl><![CDATA[{!! $package->authorurl !!}]]></authorurl>
         </authorinformation>
-    </package>
 
-    <versions>
+        <versions>
 @foreach ($package->versions as $version)
-        <version name="{!! $version->name !!}">
+            <version name="{!! $version->name !!}">
 @if (count($version->compatibilityTree))
-            <fromversions>
+                <fromversions>
 @foreach ($version->compatibilityTree as $earlierVersion)
-                <fromversion><![CDATA[{!! $earlierVersion->name !!}]]></fromversion>
+                    <fromversion><![CDATA[{!! $earlierVersion->name !!}]]></fromversion>
 @endforeach
-            </fromversions>
+                </fromversions>
 @endif
 
 @if (count($version->requirements))
-            <requiredpackages>
+                <requiredpackages>
 @foreach ($version->requirements as $requirement)
-                <requiredpackage @if($requirement->min)minversion="{!! $requirement->min !!}"@endif><![CDATA[{!! $requirement->package !!}]]></requiredpackage>
+                    <requiredpackage @if($requirement->min)minversion="{!! $requirement->min !!}"@endif><![CDATA[{!! $requirement->package !!}]]></requiredpackage>
 @endforeach
-            </requiredpackages>
+                </requiredpackages>
 @endif
 
-            <updatetype><![CDATA[{!! $version->updatetype !!}]]></updatetype>
-            <timestamp><![CDATA[{!! $version->timestamp !!}]]></timestamp>
-            <versiontype><![CDATA[{!! $version->versiontype !!}]]></versiontype>
-            <license><![CDATA[{!! $version->license !!}]]></license>
-        </version>
+                <updatetype><![CDATA[{!! $version->updatetype !!}]]></updatetype>
+                <timestamp><![CDATA[{!! $version->timestamp !!}]]></timestamp>
+                <versiontype><![CDATA[{!! $version->versiontype !!}]]></versiontype>
+                <license><![CDATA[{!! $version->license !!}]]></license>
+            </version>
 @endforeach
-    </versions>
-@endforeach
+        </versions>
+    </package>
 
+@endforeach
 </section>
