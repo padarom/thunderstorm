@@ -5,6 +5,7 @@ namespace Padarom\UpdateServer\Console\Commands;
 use Exception;
 use DOMDocument;
 use Padarom\UpdateServer\Models\Package;
+use Padarom\UpdateServer\Models\LocalizedTag;
 use Padarom\UpdateServer\DOMWrapper;
 use Illuminate\Console\Command;
 use Symfony\Component\Process\ProcessUtils;
@@ -86,6 +87,7 @@ class ImportUploads extends Command
             return compact('identifier', 'version');
         } catch (\Exception $e) {
             $this->error("The file \"$file\" is not a valid WCF package archive.");
+            dd($e->getMessage());
         }
 
         return false;
@@ -105,6 +107,23 @@ class ImportUploads extends Command
         $package->author    = $dom->getElementValue('author');
         $package->authorurl = $dom->getElementValue('authorurl');
         $package->save();
+
+        // Truncate the language tags for this package
+        $package->localizedTags()->delete();
+
+        // Get the packagenames and packagedescriptions in all languages
+        $tags = ['packagename' => 'name', 'packagedescription' => 'description'];
+        foreach ($tags as $xml => $db) {
+            foreach ($dom->getElements($xml) as $element) {
+                $localizedTag = new LocalizedTag([
+                    'tag' => $db,
+                    'text' => $element->getElementValue($element),
+                    'language' => $element->getElementAttribute($element, 'language'),
+                ]);
+                $localizedTag->package()->associate($package);
+                $localizedTag->save();
+            }
+        }
     }
 
     /**

@@ -13,9 +13,7 @@ class CreateVersionRequirementsTable extends Migration
     public function up()
     {
         Schema::create('version_requirements', function(Blueprint $table) {
-            $table->increments('id');
             $table->integer('version_id')->unsigned();
-
             $table->string('package');
             $table->string('min')->nullable();
         });

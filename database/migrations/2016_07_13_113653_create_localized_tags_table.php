@@ -13,12 +13,13 @@ class CreateLocalizedTagsTable extends Migration
     public function up()
     {
         Schema::create('localized_tags', function(Blueprint $table) {
-            $table->increments('id');
             $table->integer('package_id')->unsigned();
 
             $table->enum('tag', ['name', 'description']);
             $table->string('text');
             $table->string('language')->nullable();
+
+            $table->unique(['package_id', 'tag', 'language']);
         });
     }
 
