@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Exception;
 use DOMDocument;
-use App\Package;
+use App\Models\Package;
 use App\DOMWrapper;
 use Illuminate\Console\Command;
 use Symfony\Component\Process\ProcessUtils;
