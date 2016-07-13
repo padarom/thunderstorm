@@ -6,6 +6,7 @@ use Exception;
 use DOMDocument;
 use Padarom\UpdateServer\Models\Package;
 use Padarom\UpdateServer\Models\LocalizedTag;
+use Padarom\UpdateServer\Models\PackageVersion;
 use Padarom\UpdateServer\DOMWrapper;
 use Illuminate\Console\Command;
 use Symfony\Component\Process\ProcessUtils;
@@ -124,6 +125,18 @@ class ImportUploads extends Command
                 $localizedTag->save();
             }
         }
+
+        $packageVersion = PackageVersion::where('package_id', $package->id)->where('name', $version)->first();
+        if (!$packageVersion) {
+            $packageVersion = new PackageVersion([
+                'name' => $version,
+                'license' => 'free',
+            ]);
+            $packageVersion->package()->associate($package);
+        }
+
+        $packageVersion->timestamp = time();
+        $packageVersion->save();
     }
 
     /**

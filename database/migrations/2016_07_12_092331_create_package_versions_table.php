@@ -15,11 +15,10 @@ class CreatePackageVersionsTable extends Migration
         Schema::create('package_versions', function(Blueprint $table) {
             $table->integer('package_id')->unsigned();
             $table->string('name');
-            $table->string('updatetype');
-            $table->string('versiontype');
-            $table->string('license');
-            
-            $table->timestamp('timestamp');
+            $table->enum('updatetype', ['install', 'update'])->default('install');
+            $table->string('versiontype')->default('stable');
+            $table->string('license')->nullable();
+            $table->timestamp('timestamp')->nullable();
 
             $table->unique(['package_id', 'name']);
         });
