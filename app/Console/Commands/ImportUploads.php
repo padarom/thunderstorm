@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Padarom\UpdateServer\Console\Commands;
 
 use Exception;
 use DOMDocument;
-use App\Models\Package;
-use App\DOMWrapper;
+use Padarom\UpdateServer\Models\Package;
+use Padarom\UpdateServer\DOMWrapper;
 use Illuminate\Console\Command;
 use Symfony\Component\Process\ProcessUtils;
 use Symfony\Component\Console\Input\InputOption;

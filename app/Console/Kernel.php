@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console;
+namespace Padarom\UpdateServer\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
@@ -13,8 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Commands\ServeCommand::class,
-        \App\Console\Commands\ImportUploads::class,
+        \Padarom\UpdateServer\Console\Commands\ServeCommand::class,
+        \Padarom\UpdateServer\Console\Commands\ImportUploads::class,
     ];
 
     /**

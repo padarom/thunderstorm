@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Padarom\UpdateServer\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Package;
+use Padarom\UpdateServer\Models\Package;
 
 class ListController extends Controller
 {

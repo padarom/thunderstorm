@@ -1,5 +1,7 @@
 <?php
-namespace App\Http\Middleware;
+
+namespace Padarom\UpdateServer\Http\Middleware;
+
 use Closure;
 
 class RedirectIfPackageIsRequested

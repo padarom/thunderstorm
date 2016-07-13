@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Padarom\UpdateServer;
 
 use DOMDocument;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Padarom\UpdateServer\Http\Controllers;
 
 class PackageController extends Controller
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Padarom\UpdateServer\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
