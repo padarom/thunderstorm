@@ -19,6 +19,10 @@ class PackageVersion extends Model
 
     public function getCompatibilityTreeAttribute()
     {
+        if ($this->updatetype == 'install') {
+            return [];
+        }
+        
         return [
             new PackageVersion(['name' => '1.0.0 RC']),
         ];
