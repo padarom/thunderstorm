@@ -15,7 +15,7 @@
 
         <versions>
 @foreach ($package->versions as $version)
-            <version name="{!! $version->name !!}">
+            <version name="{!! $version->name !!}" accessible="{{ file_exists($version->storagePath) ? 'true' : 'false' }}">
 @if (count($version->updatableVersions))
                 <fromversions>
 @foreach ($version->updatableVersions as $earlierVersion)
