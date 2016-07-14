@@ -55,7 +55,11 @@ class ImportUploads extends Command
 
                 $this->info("Imported \"<comment>$identifier</comment>\" (@ $versionNumber)");
 
-                copy($path . '/' . $file, $version->storagePath);
+                // Make sure the directory exists
+                if (!file_exists(dirname($version->storagePath))) {
+                    mkdir(dirname($version->storagePath));
+                }
+                move($path . '/' . $file, $version->storagePath);
             }
         }
         
