@@ -1,5 +1,5 @@
-## Padaroms Update Server
-This is a simple package update server for WoltLab Community Framework packages written in PHP.
+# Thunderstorm
+Thunderstorm is a simple package update server for the WoltLab Community Framework written in PHP. It provides full compability with WCFs package system and a easy to use frontend to administrate and even edit packages. A production demo can be found at http://thunderstorm.padarom.io.
 
 ### Server Requirements
 This server is based on [Laravel Lumen](https://lumen.laravel.com/), and as such shares the same requirements.
@@ -20,4 +20,4 @@ This server checks for uploads every minute. To enable this, you must add a cron
 ```
 
 ## License
-This is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+This is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
