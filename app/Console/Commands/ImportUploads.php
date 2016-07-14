@@ -59,7 +59,7 @@ class ImportUploads extends Command
                 if (!file_exists(dirname($version->storagePath))) {
                     mkdir(dirname($version->storagePath));
                 }
-                move($path . '/' . $file, $version->storagePath);
+                rename($path . '/' . $file, $version->storagePath);
             }
         }
         
