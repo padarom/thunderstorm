@@ -1,7 +1,7 @@
 {
-    "name": "padarom/wcfupdateserver",
+    "name": "padarom/thunderstorm",
     "description": "A standalone WCF Package Update Server",
-    "keywords": ["package", "update", "server", "wcf", "woltlab", "community", "framework"],
+    "keywords": ["package", "update", "server", "wcf", "woltlab", "community", "framework", "thunderstorm"],
     "license": "MIT",
     "type": "project",
     "require": {
