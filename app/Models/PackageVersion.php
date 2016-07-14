@@ -29,9 +29,14 @@ class PackageVersion extends Model
         return $this->hasMany(UpdatableVersion::class, 'version_id');
     }
 
-    public function requirements()
+    public function requiredPackages()
     {
-        return $this->hasMany(VersionRequirement::class, 'version_id');
+        return $this->hasMany(MentionedPackage::class, 'version_id')->where('type', 'required');
+    }
+
+    public function excludedPackages()
+    {
+        return $this->hasMany(MentionedPackage::class, 'version_id')->where('type', 'excluded');
     }
 
     public function getDownloadURLAttribute()

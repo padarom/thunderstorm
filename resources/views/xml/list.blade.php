@@ -24,12 +24,20 @@
                 </fromversions>
 @endif
 
-@if (count($version->requirements))
+@if (count($version->requiredPackages))
                 <requiredpackages>
-@foreach ($version->requirements as $requirement)
-                    <requiredpackage @if($requirement->min)minversion="{!! $requirement->min !!}"@endif><![CDATA[{!! $requirement->package !!}]]></requiredpackage>
+@foreach ($version->requiredPackages as $requirement)
+                    <requiredpackage @if($requirement->version)minversion="{!! $requirement->version !!}"@endif><![CDATA[{!! $requirement->identifier !!}]]></requiredpackage>
 @endforeach
                 </requiredpackages>
+@endif
+
+@if (count($version->excludedPackages))
+                <excludedpackages>
+@foreach ($version->excludedPackages as $excluded)
+                    <excludedpackage @if($excluded->version)version="{!! $excluded->version !!}"@endif><![CDATA[{!! $excluded->identifier !!}]]></excludedpackage>
+@endforeach
+                </excludedpackages>
 @endif
 
                 <updatetype><![CDATA[{!! $version->updatetype !!}]]></updatetype>

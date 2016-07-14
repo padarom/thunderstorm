@@ -4,7 +4,7 @@ namespace Padarom\UpdateServer\Console\Commands;
 
 use Exception;
 use DOMDocument;
-use Padarom\UpdateServer\Models\PackageImporter;
+use Padarom\UpdateServer\PackageImporter;
 use Padarom\UpdateServer\DOMWrapper;
 use Illuminate\Console\Command;
 use Symfony\Component\Process\ProcessUtils;

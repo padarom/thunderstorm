@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVersionRequirementsTable extends Migration
+class CreateMentionedPackagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,12 @@ class CreateVersionRequirementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('version_requirements', function(Blueprint $table) {
+        Schema::create('mentioned_packages', function(Blueprint $table) {
             $table->integer('version_id')->unsigned();
-            $table->string('package');
-            $table->string('min')->nullable();
+
+            $table->enum('type', ['required', 'excluded']);
+            $table->string('identifier');
+            $table->string('version')->nullable();
         });
     }
 
@@ -26,6 +28,6 @@ class CreateVersionRequirementsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('version_requirements');
+        Schema::drop('mentioned_packages');
     }
 }

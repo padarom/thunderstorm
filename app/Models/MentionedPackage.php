@@ -4,16 +4,16 @@ namespace Padarom\UpdateServer\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class VersionRequirement extends Model
+class MentionedPackage extends Model
 {
     public $timestamps = false;
 
     public $fillable = [
-        'package', 'min',
+        'identifier', 'version', 'type'
     ];
 
     public function version()
     {
-        return $this->belongsTo(PackageVersion::class);
+        return $this->belongsTo(PackageVersion::class, 'version_id');
     }
 }

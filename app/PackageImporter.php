@@ -1,8 +1,12 @@
 <?php
 
-namespace Padarom\UpdateServer\Models;
+namespace Padarom\UpdateServer;
 
-use Padarom\UpdateServer\DOMWrapper;
+use Padarom\UpdateServer\Models\UpdatableVersion;
+use Padarom\UpdateServer\Models\MentionedPackage;
+use Padarom\UpdateServer\Models\PackageVersion;
+use Padarom\UpdateServer\Models\LocalizedTag;
+use Padarom\UpdateServer\Models\Package;
 
 class PackageImporter
 {
@@ -69,7 +73,8 @@ class PackageImporter
              ->importNameAndDescription()
              ->importVersion()
              ->importUpdatableVersions()
-             ->importVersionRequirements();
+             ->importRequiredPackages()
+             ->importExcludedPackages();
     }
 
     /**
@@ -158,15 +163,37 @@ class PackageImporter
         return $this;
     }
 
-    protected function importVersionRequirements()
+    protected function importRequiredPackages()
     {
         $version = $this->version;
-        $version->requirements()->delete();
+        $version->requiredPackages()->delete();
 
         $requirements = $this->dom->getElements('requiredpackage');
         foreach ($requirements as $requirement) {
-            $object = new VersionRequirement([ 'package' => $requirement->getElementValue($requirement) ]);
-            $object->min = $requirement->getElementAttribute($requirement, 'minversion');
+            $object = new MentionedPackage([ 
+                'identifier' => $requirement->getElementValue($requirement),
+                'version' => $requirement->getElementAttribute($requirement, 'minversion'),
+                'type' => 'required',
+            ]);
+            $object->version()->associate($version);
+            $object->save();
+        }
+
+        return $this;
+    }
+
+    protected function importExcludedPackages()
+    {
+        $version = $this->version;
+        $version->excludedPackages()->delete();
+
+        $requirements = $this->dom->getElements('excludedpackage');
+        foreach ($requirements as $requirement) {
+            $object = new MentionedPackage([ 
+                'identifier' => $requirement->getElementValue($requirement),
+                'version' => $requirement->getElementAttribute($requirement, 'version'),
+                'type' => 'excluded',
+            ]);
             $object->version()->associate($version);
             $object->save();
         }
