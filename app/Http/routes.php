@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/', ['middleware' => 'package', 'uses' => 'ListController@getFullList']);
+$app->get('/', 'ListController@getFullList');
 
 // Download a single package
 $app->get('package/{identifier}', ['as' => 'get-package', 'uses' => 'PackageController@getPackage']);

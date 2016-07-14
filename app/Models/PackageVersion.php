@@ -12,26 +12,41 @@ class PackageVersion extends Model
         'name', 'updatetype', 'versiontype', 'license', 'timestamp',
     ];
 
+    public function isVersion($number)
+    {
+        $comparison = $this->name;
+
+        return $comparison == $number || $comparison == str_replace('_', ' ', $number);
+    }
+
     public function package()
     {
         return $this->belongsTo(Package::class);
     }
 
-    public function getCompatibilityTreeAttribute()
+    public function updatableVersions()
     {
-        if ($this->updatetype == 'install') {
-            return [];
-        }
-        
-        return [
-            new PackageVersion(['name' => '1.0.0 RC']),
-        ];
+        return $this->hasMany(UpdatableVersion::class, 'version_id');
     }
 
-    public function getRequirementsAttribute()
+    public function requirements()
     {
-        return [
-            new VersionRequirement(['package' => 'com.clanunknownsoldiers.plugin.base', 'min' => '1.0.0 Beta 1']),
-        ];
+        return $this->hasMany(VersionRequirement::class, 'version_id');
+    }
+
+    public function getDownloadURLAttribute()
+    {
+        $identifier = $this->package->identifier;
+        $version = str_replace(' ', '_', $this->name);
+        
+        return route('get-package-with-version', compact('identifier', 'version'));
+    }
+
+    public function getStoragePathAttribute()
+    {
+        $path  = storage_path('packages/' . $this->package->identifier . '/');
+        $path .= str_replace(' ', '_', $this->name) . '.tar';
+
+        return $path;
     }
 }

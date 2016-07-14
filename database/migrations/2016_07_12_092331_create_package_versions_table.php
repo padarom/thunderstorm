@@ -13,6 +13,7 @@ class CreatePackageVersionsTable extends Migration
     public function up()
     {
         Schema::create('package_versions', function(Blueprint $table) {
+            $table->increments('id');
             $table->integer('package_id')->unsigned();
             $table->string('name');
             $table->enum('updatetype', ['install', 'update'])->default('install');

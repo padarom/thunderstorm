@@ -64,7 +64,7 @@ $app->singleton(
 // ]);
 
 $app->routeMiddleware([
-    'package' => Padarom\UpdateServer\Http\Middleware\RedirectIfPackageIsRequested::class,
+    // 'package' => Padarom\UpdateServer\Http\Middleware\RedirectIfPackageIsRequested::class,
 ]);
 
 /*

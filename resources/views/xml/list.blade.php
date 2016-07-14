@@ -17,9 +17,9 @@
         <versions>
 @foreach ($package->versions as $version)
             <version name="{!! $version->name !!}">
-@if (count($version->compatibilityTree))
+@if (count($version->updatableVersions))
                 <fromversions>
-@foreach ($version->compatibilityTree as $earlierVersion)
+@foreach ($version->updatableVersions as $earlierVersion)
                     <fromversion><![CDATA[{!! $earlierVersion->name !!}]]></fromversion>
 @endforeach
                 </fromversions>
@@ -37,6 +37,7 @@
                 <timestamp><![CDATA[{!! $version->timestamp !!}]]></timestamp>
                 <versiontype><![CDATA[{!! $version->versiontype !!}]]></versiontype>
                 <license><![CDATA[{!! $version->license !!}]]></license>
+                <file><![CDATA[{{ $version->downloadURL }}]]></file>
             </version>
 @endforeach
         </versions>

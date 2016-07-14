@@ -9,7 +9,8 @@ class ListController extends Controller
 {
     public function getFullList(Request $request)
     {
-        $context = $this->isWCF($request) ? 'xml' : 'html';
+        // $context = $this->isWCF($request) ? 'xml' : 'html';
+        $context = 'xml'; // Force XML for now
 
         $packages = Package::all();
 

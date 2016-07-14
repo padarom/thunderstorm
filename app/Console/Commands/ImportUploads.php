@@ -4,9 +4,7 @@ namespace Padarom\UpdateServer\Console\Commands;
 
 use Exception;
 use DOMDocument;
-use Padarom\UpdateServer\Models\Package;
-use Padarom\UpdateServer\Models\LocalizedTag;
-use Padarom\UpdateServer\Models\PackageVersion;
+use Padarom\UpdateServer\Models\PackageImporter;
 use Padarom\UpdateServer\DOMWrapper;
 use Illuminate\Console\Command;
 use Symfony\Component\Process\ProcessUtils;
@@ -27,7 +25,7 @@ class ImportUploads extends Command
      *
      * @var string
      */
-    protected $description = 'Serve the application on the PHP development server';
+    protected $description = 'Imports packages from the configured upload directory';
 
     /**
      * Execute the console command.
@@ -45,26 +43,25 @@ class ImportUploads extends Command
             $path = base_path($uploadPath);
         }
 
-        $files = [];
+        $importedSomething = false;
         foreach (scandir($path) as $file) {
             if (in_array($file, ['.', '..', '.gitignore', '.gitkeep'])) continue;
 
-            $files[] = $this->import($file, $path);
-        }
+            $version = $this->import($file, $path);
+            if ($version) {
+                $importedSomething = true;
+                $identifier    = $version->package->identifier;
+                $versionNumber = $version->name;
 
-        if (count($files)) {
-            foreach ($files as $file) {
-                if ($file) {
-                    $name = $file['identifier'];
-                    $version = $file['version'];
-                    $this->info("Imported \"<comment>$name</comment>\" (@ $version)");
-                }
+                $this->info("Imported \"<comment>$identifier</comment>\" (@ $versionNumber)");
+
+                copy($path . '/' . $file, $version->storagePath);
             }
-
-            return;
         }
         
-        $this->info('No files found to import.');
+        if (!$importedSomething) {
+            $this->info('No files found to import.');
+        }
     }
 
     protected function import($file, $path)
@@ -77,81 +74,17 @@ class ImportUploads extends Command
             $data = [];
             $dom = new DOMDocument();
             $dom->loadXML($package);
-
             $dom = new DOMWrapper($dom);
 
-            $identifier = $dom->getElementAttribute('package', 'name');
-            $version = $dom->getElementValue('version');
+            $importer = new PackageImporter($dom);
+            $importer->run();
 
-            $this->savePackageVersion($path . '/' . $file, $identifier, $version, $dom);
-
-            return compact('identifier', 'version');
+            return $importer->getVersion();
         } catch (\Exception $e) {
             $this->error("The file \"$file\" is not a valid WCF package archive.");
             dd($e->getMessage());
         }
 
         return false;
-    }
-
-    protected function savePackageVersion($path, $identifier, $version, DOMWrapper $dom)
-    {
-        // Move the file into the storage/packages directory
-        $storagePath = storage_path('packages/' . $identifier);
-        if (!file_exists($storagePath)) {
-            mkdir($storagePath);
-        }
-        //rename($path, $storagePath . '/' . $version . '.tar');
-
-        // Set the package's author and the author's URL
-        $package = $this->getPackage($identifier);
-        $package->author    = $dom->getElementValue('author');
-        $package->authorurl = $dom->getElementValue('authorurl');
-        $package->save();
-
-        // Truncate the language tags for this package
-        $package->localizedTags()->delete();
-
-        // Get the packagenames and packagedescriptions in all languages
-        $tags = ['packagename' => 'name', 'packagedescription' => 'description'];
-        foreach ($tags as $xml => $db) {
-            foreach ($dom->getElements($xml) as $element) {
-                $localizedTag = new LocalizedTag([
-                    'tag' => $db,
-                    'text' => $element->getElementValue($element),
-                    'language' => $element->getElementAttribute($element, 'language'),
-                ]);
-                $localizedTag->package()->associate($package);
-                $localizedTag->save();
-            }
-        }
-
-        $packageVersion = PackageVersion::where('package_id', $package->id)->where('name', $version)->first();
-        if (!$packageVersion) {
-            $packageVersion = new PackageVersion([
-                'name' => $version,
-                'license' => 'free',
-            ]);
-            $packageVersion->package()->associate($package);
-        }
-
-        $packageVersion->timestamp = time();
-        $packageVersion->save();
-    }
-
-    /**
-     * Retrieves the stored package with the given identifier or creates a new one.
-     * 
-     * @param string $identifier The identifier for the package to be retrieved
-     * @return Package
-     */
-    protected function getPackage($identifier)
-    {
-        $package = Package::withIdentifier($identifier);
-        if (!$package) {
-            $package = new Package(['identifier' => $identifier]);
-        }
-
-        return $package;
     }
 }
