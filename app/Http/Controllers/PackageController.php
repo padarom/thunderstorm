@@ -1,8 +1,8 @@
 <?php
 
-namespace Padarom\UpdateServer\Http\Controllers;
+namespace Padarom\Thunderstorm\Http\Controllers;
 
-use Padarom\UpdateServer\Models\Package;
+use Padarom\Thunderstorm\Models\Package;
 
 class PackageController extends Controller
 {

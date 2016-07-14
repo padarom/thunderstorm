@@ -1,6 +1,6 @@
 <?php
 
-namespace Padarom\UpdateServer\Exceptions;
+namespace Padarom\Thunderstorm\Exceptions;
 
 use Exception;
 use Illuminate\Validation\ValidationException;

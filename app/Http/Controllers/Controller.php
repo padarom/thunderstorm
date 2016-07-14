@@ -1,6 +1,6 @@
 <?php
 
-namespace Padarom\UpdateServer\Http\Controllers;
+namespace Padarom\Thunderstorm\Http\Controllers;
 
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;

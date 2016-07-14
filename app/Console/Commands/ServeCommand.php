@@ -1,6 +1,6 @@
 <?php
 
-namespace Padarom\UpdateServer\Console\Commands;
+namespace Padarom\Thunderstorm\Console\Commands;
 
 use Exception;
 use Illuminate\Console\Command;

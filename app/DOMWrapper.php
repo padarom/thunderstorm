@@ -1,6 +1,6 @@
 <?php
 
-namespace Padarom\UpdateServer;
+namespace Padarom\Thunderstorm;
 
 use DOMNode;
 

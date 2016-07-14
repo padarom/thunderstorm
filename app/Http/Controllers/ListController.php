@@ -1,9 +1,9 @@
 <?php
 
-namespace Padarom\UpdateServer\Http\Controllers;
+namespace Padarom\Thunderstorm\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Padarom\UpdateServer\Models\Package;
+use Padarom\Thunderstorm\Models\Package;
 
 class ListController extends Controller
 {

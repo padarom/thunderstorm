@@ -1,11 +1,11 @@
 <?php
 
-namespace Padarom\UpdateServer\Console\Commands;
+namespace Padarom\Thunderstorm\Console\Commands;
 
 use Exception;
 use DOMDocument;
-use Padarom\UpdateServer\PackageImporter;
-use Padarom\UpdateServer\DOMWrapper;
+use Padarom\Thunderstorm\PackageImporter;
+use Padarom\Thunderstorm\DOMWrapper;
 use Illuminate\Console\Command;
 use Symfony\Component\Process\ProcessUtils;
 use Symfony\Component\Console\Input\InputOption;

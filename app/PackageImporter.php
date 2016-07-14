@@ -1,12 +1,12 @@
 <?php
 
-namespace Padarom\UpdateServer;
+namespace Padarom\Thunderstorm;
 
-use Padarom\UpdateServer\Models\UpdatableVersion;
-use Padarom\UpdateServer\Models\MentionedPackage;
-use Padarom\UpdateServer\Models\PackageVersion;
-use Padarom\UpdateServer\Models\LocalizedTag;
-use Padarom\UpdateServer\Models\Package;
+use Padarom\Thunderstorm\Models\UpdatableVersion;
+use Padarom\Thunderstorm\Models\MentionedPackage;
+use Padarom\Thunderstorm\Models\PackageVersion;
+use Padarom\Thunderstorm\Models\LocalizedTag;
+use Padarom\Thunderstorm\Models\Package;
 
 class PackageImporter
 {

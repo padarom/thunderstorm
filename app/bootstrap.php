@@ -40,12 +40,12 @@ $app->withEloquent();
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
-    Padarom\UpdateServer\Exceptions\Handler::class
+    Padarom\Thunderstorm\Exceptions\Handler::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
-    Padarom\UpdateServer\Console\Kernel::class
+    Padarom\Thunderstorm\Console\Kernel::class
 );
 
 /*
@@ -60,11 +60,11 @@ $app->singleton(
 */
 
 // $app->middleware([
-//    Padarom\UpdateServer\Http\Middleware\ExampleMiddleware::class
+//    Padarom\Thunderstorm\Http\Middleware\ExampleMiddleware::class
 // ]);
 
 $app->routeMiddleware([
-    // 'package' => Padarom\UpdateServer\Http\Middleware\RedirectIfPackageIsRequested::class,
+    // 'package' => Padarom\Thunderstorm\Http\Middleware\RedirectIfPackageIsRequested::class,
 ]);
 
 /*
@@ -78,7 +78,7 @@ $app->routeMiddleware([
 |
 */
 
-$app->group(['namespace' => 'Padarom\UpdateServer\Http\Controllers'], function ($app) {
+$app->group(['namespace' => 'Padarom\Thunderstorm\Http\Controllers'], function ($app) {
     require __DIR__.'/../app/Http/routes.php';
 });
 

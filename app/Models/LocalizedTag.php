@@ -1,6 +1,6 @@
 <?php
 
-namespace Padarom\UpdateServer\Models;
+namespace Padarom\Thunderstorm\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
