@@ -11,7 +11,7 @@ This server is based on [Laravel Lumen](https://lumen.laravel.com/), and as such
 ## Installation
 You can manually install this server by downloading the source code and running `composer install` to install all dependencies.
 
-For releases I also provide a pre-packaged version that already contains all dependencies (about 10MB in size), that you can just drop in and run without any further configuration.
+For releases I also provide a pre-packaged version that already contains all dependencies (about 2MB in size), that you can just drop in and run without any further configuration.
 
 ### Setting up a cronjob
 This server checks for uploads every minute. To enable this, you must add a cronjob by running `crontab -e` (depending on your OS) and adding the following:
