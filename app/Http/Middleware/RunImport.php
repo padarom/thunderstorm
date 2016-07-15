@@ -17,12 +17,12 @@ class RunImport
     public function handle($request, Closure $next)
     {
         // Only run this if it was explicitly enabled
-	if (env('DISABLE_IMPORTCRON', false)) {
+        if (env('IMPORT_ONREQUESTS', false)) {
             $random = rand(0, 9);
-	    if ($random <= 2) {
-		Artisan::call('import:uploads');
+            if ($random <= 2) {
+                Artisan::call('import:uploads');
             }
-	}
+        }
 
         return $next($request);
     } 
