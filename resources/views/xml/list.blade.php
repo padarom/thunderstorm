@@ -23,7 +23,6 @@
 @endforeach
                 </fromversions>
 @endif
-
 @if (count($version->requiredPackages))
                 <requiredpackages>
 @foreach ($version->requiredPackages as $requirement)
@@ -31,7 +30,6 @@
 @endforeach
                 </requiredpackages>
 @endif
-
 @if (count($version->excludedPackages))
                 <excludedpackages>
 @foreach ($version->excludedPackages as $excluded)
@@ -39,7 +37,6 @@
 @endforeach
                 </excludedpackages>
 @endif
-
                 <updatetype><![CDATA[{!! $version->updatetype !!}]]></updatetype>
                 <timestamp><![CDATA[{!! $version->timestamp !!}]]></timestamp>
                 <versiontype><![CDATA[{!! $version->versiontype !!}]]></versiontype>

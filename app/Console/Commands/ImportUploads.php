@@ -7,6 +7,7 @@ use DOMDocument;
 use Padarom\Thunderstorm\PackageImporter;
 use Padarom\Thunderstorm\DOMWrapper;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\Process\ProcessUtils;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Process\PhpExecutableFinder;
@@ -63,7 +64,10 @@ class ImportUploads extends Command
             }
         }
         
-        if (!$importedSomething) {
+        if ($importedSomething) {
+            $cachePath = storage_path('framework/views/' . Cache::pull('xml.renderedPath'));
+            unlink($cachePath);
+        } else {
             $this->info('No files found to import.');
         }
     }
@@ -86,7 +90,6 @@ class ImportUploads extends Command
             return $importer->getVersion();
         } catch (\Exception $e) {
             $this->error("The file \"$file\" is not a valid WCF package archive.");
-            dd($e->getMessage());
         }
 
         return false;

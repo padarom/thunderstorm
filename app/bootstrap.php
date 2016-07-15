@@ -64,7 +64,7 @@ $app->singleton(
 // ]);
 
 $app->routeMiddleware([
-    // 'package' => Padarom\Thunderstorm\Http\Middleware\RedirectIfPackageIsRequested::class,
+    'run-import' => Padarom\Thunderstorm\Http\Middleware\RunImport::class,
 ]);
 
 /*
@@ -78,7 +78,7 @@ $app->routeMiddleware([
 |
 */
 
-$app->group(['namespace' => 'Padarom\Thunderstorm\Http\Controllers'], function ($app) {
+$app->group(['namespace' => 'Padarom\Thunderstorm\Http\Controllers', 'middleware' => 'run-import'], function ($app) {
     require __DIR__.'/../app/Http/routes.php';
 });
 
