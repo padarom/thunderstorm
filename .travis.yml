@@ -9,6 +9,7 @@ install:
 - php artisan migrate
 - cp .env.example .env
 - perl -p -i -e 's/APP_ENV=local/APP_ENV=production/g' .env # Turn the environment to production
+- perl -p -i -e 's/APP_DEBUG=true/APP_DEBUG=false/g' .env # Turn the debug mode off
 script: zip -q -r prepackaged.zip .
 deploy:
   skip_cleanup: true
