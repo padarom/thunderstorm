@@ -66,8 +66,7 @@ class ImportUploads extends Command
         
         if ($importedSomething) {
             if (Cache::has('xml.renderedPath')) {
-                $cachePath = storage_path('framework/views/' . Cache::pull('xml.renderedPath'));
-                unlink($cachePath);
+                unlink(Cache::pull('xml.renderedPath'));
             }
         } else {
             $this->info('No files found to import.');

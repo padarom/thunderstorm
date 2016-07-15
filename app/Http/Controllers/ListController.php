@@ -25,15 +25,14 @@ class ListController extends Controller
     protected function getCachedContent($name, callable $created)
     {
         if (Cache::has('xml.renderedPath')) {
-            $filename = storage_path('framework/views/' . Cache::get('xml.renderedPath'));
-            if (file_exists($filename)) {
-                return file_get_contents($filename);
+            if (file_exists(Cache::get('xml.renderedPath'))) {
+                return file_get_contents(Cache::get('xml.renderedPath'));
             }
         }
 
         $content = call_user_func($created);
-        $filename = str_random(32) . '.cached';
-        file_put_contents(storage_path('framework/views/' . $filename), $content);
+        $filename = storage_path('framework/views/' . str_random(32) . '.cached');
+        file_put_contents($filename, $content);
 
         // Save the filename
         Cache::forever($name, $filename);
