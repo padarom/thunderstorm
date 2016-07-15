@@ -1,5 +1,5 @@
 # Thunderstorm
-Thunderstorm is a simple package update server for the WoltLab Community Framework written in PHP. It provides full compability with WCFs package system and a easy to use frontend to administrate and even edit packages. A production demo can be found at http://thunderstorm.padarom.io.
+Thunderstorm is a simple package update server for the WoltLab Community Framework written in PHP. It provides full compability with WCFs package system and an easy to use frontend to administrate and even edit packages. A production demo can be found at http://thunderstorm.padarom.io.
 
 ### Server Requirements
 This server is based on [Laravel Lumen](https://lumen.laravel.com/), and as such shares the same requirements.
@@ -19,7 +19,7 @@ You can manually install this server by downloading the source code and running 
 For releases I also provide a pre-packaged version (about 2MB in size) that already contains all dependencies, that you can just drop in and run without needing to do steps 1-3 of the instructions above. You still need to make sure the proper permissions are set for the `storage` and `uploads` directory though.
 
 ### Setting up the import
-The server scans the `uploads/` directory (this can be configured in the `.env` configuration file) for new packages. So if you want to add new packages to the system, drop them in there. The server will automatically analyze the `package.xml` file and move it to the right directory. This import can be run manually with `php artisan import:uploads` when in the project root directory.
+The server scans the `uploads/` directory (this can be configured in the `.env` configuration file) for new packages. So if you want to add new packages to the system, drop them in there. The server will automatically analyze its `package.xml` file and move it to the right directory. This import can be run manually with `php artisan import:uploads` when in the project root directory.
 
 Alternatively there's two ways to run the import automatically:
 #### Cronjob _(recommended)_

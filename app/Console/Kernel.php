@@ -13,8 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \Padarom\Thunderstorm\Console\Commands\ServeCommand::class,
-        \Padarom\Thunderstorm\Console\Commands\ImportUploads::class,
+        Commands\ImportUploads::class,
     ];
 
     /**
