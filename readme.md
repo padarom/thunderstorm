@@ -19,5 +19,8 @@ This server checks for uploads every minute. To enable this, you must add a cron
 * * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1
 ```
 
+## Incompatibilities
+- Even though WCF supports `.tar.gz` archives (that is "gzipped tar archives"), it does not recommend using them. `.tar` archives are the preferred variant for WCF packages. Thunderstorm does currently _not_ support these gzipped archives, it only supports WCFs recommendation. This might change in the future.
+
 ## License
 This is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
