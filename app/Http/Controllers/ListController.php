@@ -32,10 +32,15 @@ class ListController extends Controller
 
         $content = call_user_func($created);
         $filename = storage_path('framework/views/' . str_random(32) . '.cached');
-        file_put_contents($filename, $content);
 
-        // Save the filename
-        Cache::forever($name, $filename);
+        try {
+            file_put_contents($filename, $content);
+
+            // Save the filename
+            Cache::forever($name, $filename);
+        } catch (\Exception $e) {
+            // Nothing for now
+        }
 
         return $content;
     }
