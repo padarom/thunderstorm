@@ -1,3 +1,9 @@
+# Vendor files
 /vendor
 composer.lock
+
+# Database
+database/database.sqlite
+
+# Environment configuration
 .env
