@@ -3,12 +3,27 @@
 namespace Padarom\Thunderstorm\Http\Controllers;
 
 use Padarom\Thunderstorm\Models\Package;
+use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
     public function getPackage($identifier)
     {
         return 'Package';
+    }
+
+    public function getPackageFromParameters(Request $request)
+    {
+        $identifier = $request->get('packageName', null);
+        $version    = $request->get('packageVersion', null);
+
+        if ($version && $identifier) {
+            return $this->getPackageWithVersion($identifier, $version);
+        } elseif ($version) {
+            return $this->getPackage($identifier);
+        }
+
+        return abort(405);
     }
 
     public function getPackageWithVersion($identifier, $versionNumber)

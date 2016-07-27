@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com https://www.woltlab.com/XSD/maelstrom/packageUpdateServer.xsd">
+<section name="packages" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com https://www.woltlab.com/XSD/maelstrom/packageUpdateServer.xsd">
 
 @foreach ($packages as $package)
     <package name="{{ $package->identifier }}">
@@ -41,7 +41,7 @@
                 <timestamp><![CDATA[{!! $version->timestamp !!}]]></timestamp>
                 <versiontype><![CDATA[{!! $version->versiontype !!}]]></versiontype>
                 <license><![CDATA[{!! $version->license !!}]]></license>
-                <file><![CDATA[{{ $version->downloadURL }}]]></file>
+                <filename><![CDATA[{{ $version->downloadURL }}]]></filename>
             </version>
 @endforeach
         </versions>

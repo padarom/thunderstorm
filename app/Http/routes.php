@@ -1,6 +1,7 @@
 <?php
 
 $app->get('/', 'ListController@getFullList');
+$app->post('/', 'PackageController@getPackageFromParameters');
 
 // Download a single package
 $app->get('package/{identifier}', ['as' => 'get-package', 'uses' => 'PackageController@getPackage']);
