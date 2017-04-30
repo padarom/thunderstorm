@@ -12,12 +12,13 @@ This server is based on [Laravel Lumen](https://lumen.laravel.com/), and as such
 You can manually install this server by downloading the source code and running `composer install` to install all dependencies. After this you will need to complete the following steps:
 
 1. Create a sqlite database file (`database/database.sqlite`)
-2. Run the database migrations (`php artisan migrate`)
-3. Copy the example environment file (`cp .env.example .env`)
+2. Copy the example environment file (`cp .env.example .env`)
+3. Run the database migrations (`php artisan migrate`)
 4. Make sure your `storage` and `uploads` directory are writeable (`chmod -R 755 storage/ uploads/`)
 
 For releases I also provide a pre-packaged version (about 2MB in size) that already contains all dependencies, that you can just drop in and run without needing to do steps 1-3 of the instructions above. You still need to make sure the proper permissions are set for the `storage` and `uploads` directory though.
 
+__You will also need to make sure that the php ini directive `short_open_tag` is set to `Off`.__
 ### Setting up the import
 The server scans the `uploads/` directory (this can be configured in the `.env` configuration file) for new packages. So if you want to add new packages to the system, drop them in there. The server will automatically analyze its `package.xml` file and move it to the right directory. This import can be run manually with `php artisan import:uploads` when in the project root directory.
 
