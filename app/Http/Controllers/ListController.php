@@ -10,23 +10,38 @@ class ListController extends Controller
 {
     public function getFullList(Request $request)
     {
-        // $context = $this->isWCF($request) ? 'xml' : 'html';
-        $context = 'xml'; // Force XML for now
-
+        $context = $this->isWCF($request) || $request->has('forcexml') ? 'xml' : 'html';
         $packages = Package::all();
 
-        $content = $this->getCachedContent('xml.renderedPath', function () use ($context, $packages) {
-            return view($context . '.list')->with('packages', $packages);
-        });
+        // Force XML query string for footer
+        if ($querystring = $request->getQueryString()) {
+            $querystring = '?' . $querystring . '&forcexml=1';
+        } else {
+            $querystring = '?forcexml=1';
+        }
+
+        $content = $this->getCachedContent($context . '.renderedPath',
+            function () use ($context, $packages, $querystring)
+            {
+                return view($context . '.list')
+                    ->with('packages', $packages)
+                    ->with('query', $querystring);
+            }
+            );
 
         return $this->response($context, $content);
     }
 
     protected function getCachedContent($name, callable $created)
     {
-        if (Cache::has('xml.renderedPath')) {
-            if (file_exists(Cache::get('xml.renderedPath'))) {
-                return file_get_contents(Cache::get('xml.renderedPath'));
+        // Prevent caching in debug mode
+        if (env('APP_DEBUG')) {
+            return call_user_func($created);
+        }
+
+        if (Cache::has($name)) {
+            if (file_exists(Cache::get($name))) {
+                return file_get_contents(Cache::get($name));
             }
         }
 

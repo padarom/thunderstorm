@@ -19,6 +19,6 @@ deploy:
   file: prepackaged.zip
   on:
     tags: true
-    repo: Padarom/thunderstorm
+    repo: padarom/thunderstorm
 notifications:
   email: false

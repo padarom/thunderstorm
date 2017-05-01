@@ -7,3 +7,6 @@ database/database.sqlite
 
 # Environment configuration
 .env
+
+# Development files
+.idea

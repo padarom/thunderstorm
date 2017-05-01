@@ -16,7 +16,7 @@ You can manually install this server by downloading the source code and running 
 3. Run the database migrations (`php artisan migrate`)
 4. Make sure your `storage` and `uploads` directory are writeable (`chmod -R 755 storage/ uploads/`)
 
-For releases I also provide a pre-packaged version (about 2MB in size) that already contains all dependencies, that you can just drop in and run without needing to do steps 1-3 of the instructions above. You still need to make sure the proper permissions are set for the `storage` and `uploads` directory though.
+For releases I also provide a pre-packaged version (about 2MB in size) that already contains all dependencies, whicht you can just drop in and use, without doing some of the steps above. You still need to make sure the proper permissions are set for the `storage` and `uploads` directory though (see step 4).
 
 __You will also need to make sure that the php ini directive `short_open_tag` is set to `Off`.__
 ### Setting up the import
