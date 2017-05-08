@@ -4,6 +4,7 @@ namespace Padarom\Thunderstorm\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Padarom\Thunderstorm\Models\LocalizedTag;
 use Padarom\Thunderstorm\Models\Package;
 
 class ListController extends Controller
@@ -13,6 +14,22 @@ class ListController extends Controller
         $context = $this->isWCF($request) || $request->has('forcexml') ? 'xml' : 'html';
         $packages = Package::all();
 
+        $arguments = ['packages' => $packages];
+
+        // Add additional data to the view if it's an HTML request
+        if ($context == 'html') {
+            $arguments = array_merge($arguments, $this->getHtmlArguments($request));
+        }
+
+        $content = $this->getCachedContent($context . '.renderedPath', function () use ($context, $arguments) {
+            return view($context . '.list', $arguments);
+        });
+
+        return $this->response($context, $content);
+    }
+
+    protected function getHtmlArguments($request)
+    {
         // Force XML query string for footer
         if ($querystring = $request->getQueryString()) {
             $querystring = '?' . $querystring . '&forcexml=1';
@@ -20,16 +37,11 @@ class ListController extends Controller
             $querystring = '?forcexml=1';
         }
 
-        $content = $this->getCachedContent($context . '.renderedPath',
-            function () use ($context, $packages, $querystring)
-            {
-                return view($context . '.list')
-                    ->with('packages', $packages)
-                    ->with('query', $querystring);
-            }
-            );
-
-        return $this->response($context, $content);
+        return [
+            'languages' => LocalizedTag::all()->pluck('language')->unique(),
+            'pageTitle' => env('PAGE_TITLE'),
+            'query' => $querystring,
+        ];
     }
 
     protected function getCachedContent($name, callable $created)

@@ -106,7 +106,7 @@ class PackageImporter
                 $localizedTag = new LocalizedTag([
                     'tag' => $db,
                     'text' => $element->getElementValue($element),
-                    'language' => $element->getElementAttribute($element, 'language'),
+                    'language' => $element->getElementAttribute($element, 'language', 'en'),
                 ]);
                 $localizedTag->package()->associate($this->package);
                 $localizedTag->save();
