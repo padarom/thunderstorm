@@ -2,21 +2,22 @@ language: php
 php:
 - '7.0'
 - '5.6'
-- '5.5'
+env:
+  - PACKAGE_NAME="thunderstorm_${TRAVIS_TAG}.zip"
 install: 
-- composer install
-- touch database/database.sqlite
-- cp .env.example .env
-- php artisan migrate
-- perl -p -i -e 's/APP_ENV=local/APP_ENV=production/g' .env # Turn the environment to production
-- perl -p -i -e 's/APP_DEBUG=true/APP_DEBUG=false/g' .env # Turn the debug mode off
-script: zip -q -r prepackaged.zip .
+  - composer install
+  - touch database/database.sqlite
+  - cp .env.example .env
+  - php artisan migrate
+  - perl -p -i -e 's/APP_ENV=local/APP_ENV=production/g' .env # Turn the environment to production
+  - perl -p -i -e 's/APP_DEBUG=true/APP_DEBUG=false/g' .env # Turn the debug mode off
+script: zip -q -r ${PACKAGE_NAME} .
 deploy:
   skip_cleanup: true
   provider: releases
+  file: $PACKAGE_NAME
   api_key:
-    secure: dWE7P/VOwry3qGJZIL16e4daOIzO5noLMJrd90Gc0TZ7kN+PAvVrrEG2jXedSxev0PG+Y/1F1FRoe5OEZR00Sm5MIO13cmxtyKQ6yaQiPyYQX5hlrTT2a4EOd1Umw6zj/BuO7YqzjmZbWjyrJzpQ/F+Shy8rvH00vhTMXagDhh3TLs+ilNxnZmI4K/rmXIhaLoqcr6Vsc/NdGWeO16IwV8FPEJYmsfrhzkPSxso3occah4dchdoHD7HhZkdFl/W3aleqPkfoRCFAGqVSdkn9kqfiu8/pIfxXLZqPiTDAGOlR8p30xRSi50GC4yDhvmb0WNQ9ghXwhdI4GCjz+5I9lX2mTCY3e7sAYqMQzW903aAqreiVqMOrdiRy96/B2DrxGJjJM4Zn0VFtc+0XIhzyn+Z22+Lzxv6lFPBk+W1PAIR41qgCcLwWAV9GY31LpHmI3SAXtAoW5rgmJ1RdObQ00ygzOzs031v8uvfUrbHn+FufnIwGIhM/DBTG7Zvjhqe1ov0LAavH7sqGUlW7xyPZNKhBT70f1zoTl7dLFnbSWQi385oDvXjrIm3ChoSnSrXIxw0xUFVGfu499zbkl7W3D1QJZiCgICoq+yP3IPsYPoh+M0P3cG3qcR+rR2uHJoblpodZWtz6kkAta8E4Ys12nFkwPAgIVo6RABntELLYhDk=
-  file: prepackaged.zip
+    $GITHUB_TOKEN
   on:
     tags: true
     repo: padarom/thunderstorm
