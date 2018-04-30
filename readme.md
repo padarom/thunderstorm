@@ -1,10 +1,10 @@
 # Thunderstorm
 Thunderstorm is a simple package update server for the WoltLab Community Framework written in PHP. It provides full compability with WCFs package system (\*).
 
-### Roadmap
-_As I no longer use WCF I cannot put any more resources into this project until there is more interest in it or my schedule clears up._
+_As I no longer use WCF I cannot put any more resources into this project until there is more interest in it or my schedule clears up. Contributions are much appreciated!_ **Although not currently in development, Thunderstorm can be considered ready for use in production environments.**
 
-- [ ] HTML based frontend
+### Roadmap
+- [x] HTML based frontend
 - [ ] Authentication
 - [ ] Administration interface
 - [ ] Ability to edit plugins from the system
