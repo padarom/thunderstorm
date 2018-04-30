@@ -9,7 +9,12 @@ class PackageController extends Controller
 {
     public function getPackage($identifier)
     {
-        return 'Package';
+        $package = Package::withIdentifier($identifier);
+        $version = $package->versions->sort(function ($a, $b) {
+            return version_compare($b->name, $a->name); 
+        })->first();
+
+        return $this->getPackageWithVersion($identifier, $version->name);
     }
 
     public function getPackageFromParameters(Request $request)
